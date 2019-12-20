@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房间类型</title>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script th:src="@{https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <style>
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        .bar7 {
+            background: #7BA7AB;
+            height: 40px;
+        }
+        .bar7 form {
+            height: 20px;
+        }
+        .bar7 input {
+            width: 250px;
+            border-radius: 42px;
+            border: 2px solid #324B4E;
+            background: #F9F0DA;
+            transition: .3s linear;
+            position: absolute;
+            top: 8px;
+        }
+
+        .bar7 button {
+            background: none;
+            top: 10px;
+            left: 220px;
+            position: absolute;
+        }
+        .bar7 button:before{
+            content: "\f002";
+            font-family: FontAwesome;
+            color: #324b4e;
+        }
+
+    </style>
+</head>
+<body>
+<div class="search bar7">
+    <form action="sear" method="post">
+        <input type="text" class="content" name="content" placeholder="&nbsp;&nbsp;请输入姓名...">
+        <button type="submit" data-toggle="modal" data-target="#myModal"></button>
+    </form>
+<a th:href="@{/addbook}" class="btn btn-primary" style="position: absolute;top: 3px;left: 300px">新增</a>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>用户编号</th>
+        <th>房间类型</th>
+        <th>真实姓名</th>
+        <th>身份证号</th>
+        <th>手机号</th>
+        <th>住店时间</th>
+        <th>离店时间</th>
+        <th>创建时间</th>
+        <th>价格</th>
+        <!--<th>状态</th>-->
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr th:each="bood: ${iPage.records}">
+        <td th:text="${bood.uname}">张三</td>
+        <td th:text="${bood.tname}">1</td>
+        <td th:text="${bood.realname}">1</td>
+        <td th:text="${bood.idcard}">1</td>
+        <td th:text="${bood.phone}">1</td>
+        <td th:text="${#dates.format(bood.arrivedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${#dates.format(bood.leavedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${#dates.format(bood.creadate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${bood.tprice}">1</td>
+        <!--<td th:text="${book.bremark}">1</td>-->
+        <!--<select id="edit-status" name="status" class="easyui-combobox" panelHeight="auto" style="width:268px" data-options="required:true, missingMessage:'请选择状态'">
+                <option value="0">预定中</option>
+                <option value="1">已入住</option>
+            </select>
+-->
+        <!--<td th:switch="${bood.bremark}">
+            <span th:case="0">预订中</span>
+            <span th:case="1">已入住</span>-->
+        <td><button type="button" id="abc" class="btn btn-warning" th:attr="bookTid=${bood.bid}">入住</a></td>
+        <td><a th:href="@{|/bood1/${bood.bid}|}" class="btn btn-success">编辑</a></td>
+        <td>
+            <form th:action="@{|/bood/${bood.bid}|}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="删除" class="btn btn-danger"/>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="bood" class="btn btn-default">首页</a>
+<span th:if="${iPage.current}>1">
+    <a th:href="@{'bood?page='+${iPage.getCurrent()-1}}" class="btn btn-default">上一页</a>
+</span>
+<span th:text="${iPage.current}"></span>
+<span th:if="${iPage.current}<${pages}">
+    <a th:href="@{'bood?page='+${iPage.getCurrent()+1}}" class="btn btn-default">下一页</a>
+</span>
+<a th:href="@{'bood?page='+${pages}}" class="btn btn-default">末页</a>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $(document).on('click', "#abc", function () {
+            var bid=$(this).attr("bookTid");
+            var roomnum= prompt("请输入房间号","");
+            if(roomnum){
+                $.get("saveRoom",{bid:bid,roomnum:roomnum},function (data) {
+                location.reload();
+                },"json");
+            }
+
+
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <title>pay</title>
+</head>
+<body οnlοad="load();">
+<h3>订单详情&nbsp;&nbsp;<a th:href="@{/userRoomType}"><input type="button" class="btn btn-success" value="返回主页"></input></a></h3>
+<table class="table table-striped">
+    <tr>
+        <th>订单编号</th>
+        <th>房型</th>
+        <th>住店时间</th>
+        <th>离店时间</th>
+        <th>价格</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr th:each="book: ${list}">
+        <td th:text="${book.bianhao}">1</td>
+        <td th:text="${book.tname}">1</td>
+        <td th:text="${#dates.format(book.arrivedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${#dates.format(book.leavedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${book.jiage}">1</td>
+        <!--<td th:text="${book.bremark}">1</td>-->
+        <!--<select id="edit-status" name="status" class="easyui-combobox" panelHeight="auto" style="width:268px" data-options="required:true, missingMessage:'请选择状态'">
+                <option value="0">预定中</option>
+                <option value="1">已入住</option>
+            </select>
+-->     <td th:text="${book.roomnum}">1</td>
+        <!--<td th:switch="${book.bremark}">
+            <span th:case="0">预订中</span>
+            <span th:case="1">已入住</span>
+        </td>-->
+        <td id="ore"><a th:href="@{|/order/${book.bid}|}" class="btn btn-danger" >退款</a></td>
+
+    </tr>
+</table>
+<h3>温馨提示，已到预订日期的订单无法退款，酒店联系电话：333333333</h3>
+<script type="text/javascript">
+    /*$(function () {
+        $(document).on('click', "#ore", function () {
+            var myDate = new Date();
+            var time1 = myDate.getMilliseconds();
+            var date = new Date(book.arrivedate);
+            var time2 = date.getMilliseconds();
+            var time = (time1 - time2);
+            console.log(time1);
+            console.log(time);
+            if (time!=36000000) {
+                alert("已超过退款日期，不能退款")
+                return false;
+            } else {
+                return true;
+            }
+        })
+
+    })*/
+</script>
+</body>
+</html>

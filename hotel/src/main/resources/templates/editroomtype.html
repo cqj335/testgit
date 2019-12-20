@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改房型信息</title>
+    <script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form action="../roomtype" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="tid" th:value="${roomtype.tid}" />
+    类型：<input type="text" name="tname" th:value="${roomtype.tname}"><br/>
+    价格：<input type="text" name="tprice" th:value="${roomtype.tprice}"><br/>
+    可住人数：<input type="text" name="tlivenum"  th:value="${roomtype.tlivenum}"/><br/>
+    床位数量：<input type="text" name="tbednum" th:value="${roomtype.tbednum}"/><br/>
+    房间数：<input type="text" name="troomnum" th:value="${roomtype.troomnum}" /><!--<input type="text" name="tablenum" style="display: none"/><br/>
+    预订数量：<input type="text" name="tbooknum" th:value="${roomtype.tbooknum}"/><br/>
+    已入住数量：<input type="text" name="tlivednum" th:value="${roomtype.tlivednum}"/>--><br/>
+    备注：<input type="textarea" name="tremark" th:value="${roomtype.tremark}"/><br/>
+    <input type="submit" id="btn" class="submit" />
+</form>
+<!--<script type="text/javascript">
+    $(function () {
+        $(".submit").click(function() {
+            var tablenuum=0;
+            var troomnum=$("#troomnum").val();
+            var tbooknum=$("#tbooknum").val();
+            var tlivednum=$("#tlivednum").val();
+            tablenum=(troomnum-tbooknum-tlivednum);
+            $("#tablenum").val(tablenum);
+        })
+    })
+</script>-->
+</body>
+</html>

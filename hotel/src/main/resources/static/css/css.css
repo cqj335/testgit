@@ -1,0 +1,195 @@
+﻿/**************首页***************/
+/**************第一频***************/
+.webContent-one{
+    width: 100%;
+    height: 444px;
+    border-top:3px solid #018ce7 ;
+    position: relative;
+}
+.webContent-one>div{
+    position: absolute;
+}
+.webContent-one .fastNav{
+    height:447px ;
+    width: 193px;
+    top:0px;
+    left:0px ;
+}
+
+
+
+
+
+
+
+/****************日期插件样式******************/
+.ui-datepicker-append{
+    color: #999999;
+    font-size: 13px;
+    font-family: 'Microsoft YaHei';
+    position: absolute;
+    top: 0px;
+}
+.start-span .ui-datepicker-append{
+    left: 220px;
+}
+.end-span .ui-datepicker-append{
+    left: 488px;
+}
+.ui-datepicker{
+    width: 305px;
+    padding: 0px;
+    border: 1px solid #dcdcdc;
+    border-radius: 0px;
+}
+.ui-datepicker-header{
+    width: 305px;
+    height: 31px;
+    line-height: 31px;
+    border: none;
+    border-radius: 0px;
+    color: #ffffff;
+    padding: 0px;
+    margin: 0px;
+    background: url("../images/ui_header_bg.png") left top repeat-x;
+}
+.ui-datepicker-title,.ui-datepicker-title > span{
+    height: 31px;
+    line-height: 31px;
+    font-family: arial;
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+}
+.ui-datepicker th{
+    color: #999;
+    height: 38px;
+    line-height: 38px;
+    font-family: 'Microsoft YaHei';
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+}
+.ui-widget-header .ui-state-default,.ui-state-default{
+    border: none;
+    background:none;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: none;
+    color: #555555;
+    font-size: 12px;
+    background: #fdfdfd;
+    margin: 0px;
+    padding: 0px;
+}
+.ui-datepicker td span{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+a.ui-state-default:hover,.ui-datepicker-current-day .ui-state-active {
+    background: #3996ff;
+    color: #ffffff;
+}
+ui-state-hover .ui-icon,.ui-datepicker-next-hover,
+ui-state-hover .ui-icon,.ui-datepicker-prev-hover{
+    background: none;
+}
+
+.ui-datepicker-next:hover,.ui-datepicker-prev:hover{
+    background: none;
+    border: none;
+}
+.ui-widget-header .ui-icon,.ui-state-hover .ui-icon{
+    background: url("../images/ui_date_bg.png") no-repeat;
+    top: 6px;
+}
+.ui-datepicker-next .ui-icon-circle-triangle-e{
+    width: 18px;
+    height: 11px;
+    background-position:0px -22px;
+}
+.ui-datepicker-prev .ui-icon-circle-triangle-e{
+    width: 18px;
+    height: 11px;
+    background-position:0px -0px;
+}
+.ui-datepicker .ui-datepicker-next span{
+    margin: -5px 0px 0px -35px;
+}
+.ui-datepicker .ui-datepicker-prev span{
+    margin: -5px 0px 0px 19px;
+}
+/****************住宿列表******************/
+
+
+
+
+
+
+
+.stay-list-left .search-lab{
+    width: 84px;
+    text-align: right;
+    display: block;
+    float: left;
+    font-size: 20px;
+    margin-left: 60px;
+    margin-top: 3px;
+}
+.sea-div input[type=text]{
+    width: 259px;
+    height: 33px;
+    line-height: 33px;
+    color: #ff5400;
+    font-family: arial;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-indent: 10px;
+    display: block;
+    float: left;
+}
+
+
+.sea-div .ui-datepicker-append{
+    margin-top: 23px;
+    font-size: 20px;
+    display: none;
+}
+.webIndex{
+    margin-top: 20px;
+}
+.stay-list-left .search-but{
+    width: 200px;
+    height: 31px;
+    line-height: 31px;
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Microsoft YaHei";
+    display: block;
+    float: left;
+    margin: 0px 0px 0px 112px;
+    background: url("../images/more_bg.png") 0px -256px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

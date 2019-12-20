@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房间类型</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/smoothness/jquery.ui.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{css/css.css}"/>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+
+
+</head>
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="edtuserform">
+                        用户名：<input type="text" name="uname" th:value="${#session.getAttribute('uname')}"/><br/>
+                        密码：<input type="text" name="upassword" th:value="${#session.getAttribute('upassword')}"/><br/>
+                        电话：<input type="text" name="phone" th:value="${#session.getAttribute('phone')}"/><br/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="edtUserbtn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bookModalLabel">用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="bookform" >
+                        用户名：<input id="uname" type="text" name="uname" th:value="${#session.getAttribute('uname')}"/><br/>
+                        房型：<input id="tname" type="text" name="tname" /><br/>
+                        真实姓名：<input id="realname" type="text" name="realname" /><br/>
+                        身份证：<input type="text" name="idcard" /><br/>
+                        电话：<input type="text" name="phone" th:value="${#session.getAttribute('phone')}"/><br/>
+                        到店日期：<input type="text" id="arrivedate" name="arrivedate" /><br/>
+                        离店日期：<input type="text" id="leavedate" name="leavedate" /><br/>
+                        订单创建时间：<input type="text" id="creadate" name="creadate" /><br/>
+                        备注：<input type="text" name="bremark" /><br/>
+                        价格：<input type="text" id="tprice" name="tprice" /><br/>
+
+                        </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="bookSavebtn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" data-toggle="modal" data-target="#myModal">编辑信息</button>
+        <a href="#" th:href="@{/loginOut}" >注销</a>
+    </div>
+    <div class="webIndex">
+        <div class="stay-list clearFloat">
+            <div class="stay-list-left">
+
+                <form>
+
+                    <div class="sea-div">
+                        <label class="search-lab">入住日期</label><input type="text" readonly  id="startDate"/>
+                    </div>
+                    <div class="sea-div">
+                        <label class="search-lab">退房日期</label><input type="text" readonly  id="endDate"/>
+                    </div>
+                    <input type="button"  class="search-but" value="搜  索"/>
+                </form>
+            </div>
+        </div>
+    </div>
+<hr/>
+<table>
+    <tr>
+        <th>编号</th>
+        <th>类型</th>
+        <th>图片</th>
+        <th>价格</th>
+        <th>可入住人数</th>
+        <th>床位数量</th>
+        <th>备注</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr th:each="roomtype: ${iPage.records}">
+        <td th:text="${roomtype.tid}">2</td>
+        <td id="ttname"th:text="${roomtype.tname}">张三</td>
+        <td>
+            <img th:src="@{${roomtype.tphoto}}" th:width="100px"/>
+        </td>
+        <td id="price" th:text="${roomtype.tprice}">1</td>
+        <td th:text="${roomtype.tlivenum}">1</td>
+        <td th:text="${roomtype.tbednum}">1</td>
+        <td th:text="${roomtype.tremark}">1</td>
+        <td><button type="button" class="bookbtn" data-toggle="modal" data-target="#bookModal" th:value="${roomtype.tname}" >下订</button></td>
+<!--        <td><a href="editroomtype.html" th:href="@{|/roomtype/${roomtype.tid}|}" class="btn btn-default">编辑</a></td>-->
+<!--        <td>-->
+<!--            <form th:action="@{|/roomtype/${roomtype.tid}|}" method="post">-->
+<!--                <input type="hidden" name="_method" value="delete"/>-->
+<!--                <input type="submit" value="删除" />-->
+<!--            </form>-->
+<!--        </td>-->
+    </tr>
+</table>
+<a th:href="@{|/userRoomType/?page=1&size=2|}" class="button">首页</a>
+<span th:if="${iPage.current>1}">
+    <a th:href="@{|/userRoomType/?page=${iPage.current-1}&size=2|}" class="btn btn-default">上一页</a>
+</span>
+<span th:if="${iPage.current<pages}">
+    <a th:href="@{|/userRoomType/?page=${iPage.current+1}&size=2|}" class="btn btn-default">下一页</a>
+</span>
+<a th:href="@{|/userRoomType/?page=${pages}&size=2|}" class="button">末页</a>
+</div>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.ui.js}"></script>
+<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/stay.js}"></script>
+<script type="text/javascript">
+    $(function () {
+$("#edtUserbtn").click(function () {
+     // alert($("#edtuserform").serialize());
+    $.post("edtUser",$("#edtuserform").serialize(),function (data) {
+        alert(data.msg);
+         $('#myModal').modal('hide');
+    },"json");
+});
+$(".bookbtn").click(function () {
+
+    var tname=$("#ttname").text();
+    $("#tname").val(tname);
+    $("#arrivedate").val($("#startDate").val());
+    $("#leavedate").val($("#endDate").val());
+    $("#creadate").val( new Date().toLocaleString().replace(/[/]/g,'-').replace(/[日上下午]/g,''));
+    $("#tprice").val($("#price").text())
+})
+        $("#bookSavebtn").click(function () {
+            alert($("#bookform").serialize());
+            $.post("saveBook",$("#bookform").serialize(),function (data) {
+               alert(i);
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/reservation.css}" type="text/css" rel="Stylesheet"/>
+  <link th:href="@{/css/index.css}" type="text/css" rel="Stylesheet"/>
+   <link rel="stylesheet" type="text/css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/smoothness/jquery.ui.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/css.css}"/>
+    <script th:src="@{/js/jquery-3.2.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <style type="text/css">
+        .img{
+            cursor: pointer;
+            transition: all 0.6s;
+        }
+        .img:hover{
+            transform: scale(2.0);
+        }
+        .ccc{
+            margin: 0px;
+            text-align: center;
+        }
+    </style>
+<title>首页</title>
+</head>
+<body>
+<!-- Modal -->
+<!--<div class="modal fade" id="myOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="orderModalLabel">我的订单</h4>
+            </div>
+            <div class="modal-body">
+                <form id="orderform" >
+                    <input  type="hidden" name="uname" id="myUname" th:value="${#session.getAttribute('uname')}"><br/>
+&lt;!&ndash;                    房型：<input  type="text" name="tname" id="myTname"/><br/>&ndash;&gt;
+&lt;!&ndash;                    真实姓名：<input  type="text" name="realname" id="myRealname"/><br/>&ndash;&gt;
+&lt;!&ndash;                    身份证：<input type="text" name="idcard" id="myIdcard"/><br/>&ndash;&gt;
+&lt;!&ndash;                    电话：<input type="text" name="phone" id="myPhone"/><br/>&ndash;&gt;
+&lt;!&ndash;                    到店日期：<input type="text"  name="arrivedate" id="myArrivedate"/><br/>&ndash;&gt;
+&lt;!&ndash;                    离店日期：<input type="text"  name="leavedate" id="myLeavedate"/><br/>&ndash;&gt;
+&lt;!&ndash;                    订单创建时间：<input type="text"  name="creadate" id="myCreadate"/><br/>&ndash;&gt;
+&lt;!&ndash;                    备注：<input type="text" name="bremark" id="myBremark"/><br/>&ndash;&gt;
+&lt;!&ndash;                    价格：<input type="text"  name="tprice" id="myTprice"/><br/>&ndash;&gt;
+                </form>
+                <table class="table table-hover" id="emps_table">
+                    <thead>
+                    <tr>
+&lt;!&ndash;                        <th>&ndash;&gt;
+&lt;!&ndash;                            <input type="checkbox" id="check_all"/>&ndash;&gt;
+&lt;!&ndash;                        </th>&ndash;&gt;
+                        <th>入住时间</th>
+                        <th>离店时间</th>
+                        <th>价格</th>
+&lt;!&ndash;                        <th>email</th>&ndash;&gt;
+&lt;!&ndash;                        <th>deptName</th>&ndash;&gt;
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+	<!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="edtuserform">
+                        用户名：<input type="text" name="uname" th:value="${#session.getAttribute('uname')}"/><br/>
+                        密码：<input type="text" name="upassword" th:value="${#session.getAttribute('upassword')}"/><br/>
+                        电话：<input type="text" name="phone" th:value="${#session.getAttribute('phone')}"/><br/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" id="edtUserbtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form id="bookform" th:action="@{/pay}" method="post" accept-charset="UTF-8"  onsubmit="return checkForm()">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bookModalLabel">订单信息</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden"name="mingcheng" id="WIDsubject" required><br/>
+                    订单号：<input type="text" name="bianhao" id="WIDout_trade_no" required><br/>
+                        用户名：<input id="uname" type="text" name="uname" th:value="${#session.getAttribute('uname')}"><br/>
+                        房型：<input id="tname" type="text" name="tname" /><br/>
+                        真实姓名：<input id="realname" type="text" name="realname" required oninvalid="setCustomValidity('请输入您的姓名');" oninput="setCustomValidity('');" /><br/>
+                        身份证：<input type="text" name="idcard"  id="idcard" required oninvalid="setCustomValidity('请输入您的身份证');" oninput="setCustomValidity('');" pattern="/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/"/><br/>
+                        电话：<input type="text" name="phone" th:value="${#session.getAttribute('phone')}"/><br/>
+                        到店日期：<input type="text" id="arrivedate" name="arrivedate" /><br/>
+                        离店日期：<input type="text" id="leavedate" name="leavedate" /><br/>
+                        订单创建时间：<input type="text" id="creadate" name="creadate" /><br/>
+                        价格：<input type="text" id="tprice" class="tprice" name="tprice" /><br/>
+                    <input type="hidden" name="bremark" id="bremark"/><br/>
+                    <input type="hidden" name="jiage"  id="WIDtotal_amount" required><br/>
+                    <input type="hidden" name="miaoshu" id="WIDbody"><br/>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary" id="bookSavebtn">支付</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+<!--头部-->
+<div id="c_header"></div>
+<!--主体内容-->
+<section>
+  <div id="subject">
+<p style="float:right;">
+<!--	<th:if test="${account == null }">-->
+<!--		<a href="../home/login">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+<!--		<a href="../home/reg">注册</a>&nbsp;-->
+<!--	</th:if>-->
+		<font >欢迎您：<span th:text="${#session.getAttribute('uname')}"></span> &nbsp;&nbsp;|&nbsp;&nbsp;</font>
+        <a th:href="@{/order}"><button type="button" >我的订单</button></a>&nbsp;&nbsp;|
+		<button type="button" data-toggle="modal" data-target="#myModal">用户信息</button>&nbsp;&nbsp;|
+        <a th:href="@{/mlogin}"><input type="button" value="管理员入口"></input></a>&nbsp;&nbsp;|
+        <!--<a href="@{/mlogin}" class="button">管理员入口</a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+		<a href="#" th:href="@{/loginOut}" >注销登录</a>&nbsp;
+	
+</p>
+    <img th:src="@{/img/index_02.jpg}" alt="" height="256px" width="100%">
+    <!--遮罩-->
+    <ul class="shade_mag">
+      <li><img th:src="@{/img/s_02.png}" alt=""></li>
+      <li><img th:src="@{/img/s_01.png}" alt=""></li>
+    </ul>
+    
+  </div>
+
+
+  <!---->
+  <!---预订菜单--->
+  <div id="due_menu">
+    <!--关于-->
+    
+    <!--客房-->
+    <div id="guest_rooms">
+      <p class="booking_tab"><span></span>客房列表</p>
+      <div class="chioce">
+        <div class="webIndex">
+        <div class="stay-list clearFloat">
+            <div class="stay-list-left">
+
+                <form>
+
+                    <div class="sea-div">
+                        <label class="search-lab">入住日期</label><input type="text" readonly  id="startDate"/>
+                    </div>
+                    <div class="sea-div">
+                        <label class="search-lab">退房日期</label><input type="text" readonly  id="endDate"/>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+      </div>
+      <form style="display:none;" action="index" method="get" id="search-form"><input type="hidden" name="name" id="search-name"></form>
+      <!--列表-->
+      <table id="pro_list" >
+        <thead>
+          <tr>
+            <th width="200px">客房</th>
+            <th>房型</th>
+            <th>可住人数</th>
+            <th>床位数</th>
+            <th>房价</th>
+            <th>预订</th>
+              <th>    </th>
+          </tr>
+        </thead>
+        <tbody >
+        <tr th:each="roomtype: ${iPage.records}" th:id="roomtype.tid">
+          <td><a href="#"><img  class="img" th:src="@{${roomtype.tphoto}}" alt=""></a>
+          </td>
+          <td align="center">
+            <p id="ttname"th:text="${roomtype.tname}" ></p>
+            <p class="sub_txt"></p>
+          </td>
+          <td  th:text="${roomtype.tlivenum}">1</td>
+          <td th:text="${roomtype.tbednum}"> </td>
+            <td id="price" th:text="${roomtype.tprice}"></td>
+          <!--<td>
+          	<c:if test="${roomType.status == 0 }">
+          		已满房
+          	</c:if>
+          	<c:if test="${roomType.status == 1 }">
+          		可预订
+          	</c:if>
+          </td>
+          <td>
+          	<c:if test="${roomType.status == 0 }">
+          		<input type="button" class="disable" value="满房" >
+          	</c:if>
+          	<c:if test="${roomType.status == 1 }">-->
+<!--            //th:attr="bookTname=${roomtype.tname}"给 按键设置一个 bookTname的属性 值是=roomtype.tname。-->
+          		<td><button type="button" id="bookbtn" class="bookbtn" data-toggle="modal" data-target="#bookModal" th:attr="bookTid=${roomtype.tid}" >下订</button></td>
+          	<!--</c:if>-->
+          <!--</td>-->
+        </tr>
+      </table>
+        <div class="ccc">
+        <a th:href="@{|/userRoomType?page=1&size=2|}" class="btn btn-default">首页</a>
+        <span th:if="${iPage.current>1}">
+    <a th:href="@{|/userRoomType?page=${iPage.current-1}&size=2|}" class="btn btn-default">上一页</a>
+</span>
+        <span th:if="${iPage.current<pages}">
+    <a th:href="@{|/userRoomType?page=${iPage.current+1}&size=2|}" class="btn btn-default">下一页</a>
+</span>
+        <a th:href="@{|/userRoomType?page=${pages}&size=2|}" class="btn btn-default">末页</a>
+        </div>
+    </div>
+
+      <script type="text/javascript" th:src="@{/js/jquery.ui.js}"></script>
+      <script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+      <script type="text/javascript" th:src="@{/js/stay.js}"></script>
+
+        </tbody>
+      </table>
+      
+      <div id="pages"></div>
+      <!--  -列表菜单 -->
+      <div></div>
+    </div>
+  </div>
+
+</section>
+
+<script type="text/javascript">
+    function checkName() {
+        var name=document.getElementById("realname");
+        if (name.trim().length==0){
+            alert("姓名不能为空");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function checkIdcard() {
+        var p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        var idCard=document.getElementById("idcard");
+        if (idcard.trim().length==0){
+            alert("身份证不能为空");
+            return false;
+        }else if (p.test(idCard)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    function checkForm () {
+        if (checkName()&&checkIdcard()==true) {
+            return true;
+        }
+        return false;
+    }
+
+</script>
+    <script type="text/javascript">
+        $(function () {
+            $("#edtUserbtn").click(function () {
+                // alert($("#edtuserform").serialize());
+                var edtuserform=$("#edtuserform").serialize();
+                // alert($("#edtuserform").val());
+                $.post("edtUser",$("#edtuserform").serialize(),function (data) {
+                    alert(data.msg);
+                    $('#myModal').modal('hide');
+                },"json");
+            });
+
+            $(document).on('click', ".bookbtn", function () {
+                var tid=$(this).attr("bookTid");
+                var startDate=$("#startDate").val();
+                var endDate=$("#endDate").val();
+                $.get("findRoom",{tid:tid,startDate:startDate,endDate:endDate},function (data) {
+                    if(data==false){
+                        alert("该时间段房间已满，无法预订")
+                        $("#bookModal").modal('hide');
+                    }else{
+                        var tname=data.tname;
+                        var tprice=data.tprice;
+                        var startDate=$("#startDate").val();
+                        var endDate=$("#endDate").val();
+                        var cha=daysBetween(startDate,endDate);
+                        var timestamp = (new Date()).getTime();
+                        tprice=cha*tprice;
+                        var bremark=0;
+                        $("#bremark").val(bremark);
+                        $("#WIDout_trade_no").val(timestamp);
+                        $("#WIDsubject").val(tname);
+                        $("#WIDtotal_amount").val(tprice);
+                        $("#WIDbody").val(tname);
+                        $("#tname").val(tname);
+                        $("#tprice").val(tprice);
+                        $("#arrivedate").val($("#startDate").val());
+                        $("#leavedate").val($("#endDate").val());
+                        $("#creadate").val( new Date().toLocaleString().replace(/[/]/g,'-'));
+                    }
+
+                },"json");
+
+            });
+              function daysBetween(sDate1,sDate2){
+         //Date.parse() 解析一个日期时间字符串，并返回1970/1/1 午夜距离该日期时间的毫秒数
+                var time1 = Date.parse(new Date(sDate1));
+                var time2 = Date.parse(new Date(sDate2));
+                var nDays = Math.abs(parseInt((time2 - time1)/1000/3600/24));
+                return  nDays;
+            };
+
+            //  $("#bookSavebtn").click(function () {
+            //     $.post("saveBook",$("#bookform").serialize(),function (data) {
+            //         console.log(data.msg);
+            //     },"json");
+            // });
+
+             /*$("#myOrder").click(function () {
+                var name=$("#myUname").val();
+                $.get("myOrder",{uname:name},function (result) {
+                    build_myOrder_table(result);
+                },"json");
+            });
+            function build_myOrder_table(result) {
+                $("#emps_table tbody").empty();
+                $.each(result, function (index, item) {
+                    // var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
+                    var myArrivedate = $("<td></td>").append(format(item.arrivedate));
+                    var myLeavedate = $("<td></td>").append(format(item.leavedate));
+                    var myTprice = $("<td></td>").append(item.tprice);
+                    var button = $("<td><button class='tuikuan' >退款</button></td>");
+                    $("<tr></tr>")
+                        .append(myArrivedate)
+                        .append(myLeavedate)
+                        .append(myTprice)
+                        .append(button)
+                        .appendTo("#emps_table tbody");
+                    $(".tuikuan").click(function () {
+
+                        var bianhao=$(this).parents("tr").eq(0).attr("myTprice");
+                         console.log(bianhao);
+                        $.get("tuikuan",{bianhao:bianhao},function (data) {
+
+                        },"json");
+                    });
+                });
+            }*/
+            //把时间戳转换成普通日期格式
+            function add0(m){return m<10?'0'+m:m }
+            function format(timestamp)
+            {
+                //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+                var time = new Date(timestamp);
+                var year = time.getFullYear();
+                var month = time.getMonth()+1;
+                var date = time.getDate();
+                // var hours = time.getHours();
+                // var minutes = time.getMinutes();
+                // var seconds = time.getSeconds();
+                //+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds)
+                return year+'-'+add0(month)+'-'+add0(date);
+            }
+            //鼠标经过图片放大
+
+        });
+
+    </script>
+
+</body>

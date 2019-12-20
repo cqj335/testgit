@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房间类型</title>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+<a th:href="@{/addroomtype}" class="btn btn-primary" style="position: relative;top: 10px">新增</a>
+<hr/>
+<table class="table table-striped">
+    <tr>
+        <th>编号</th>
+        <th>类型</th>
+        <th>图片</th>
+        <th>价格</th>
+        <th>可入住人数</th>
+        <th>床位数量</th>
+        <th>房间数量</th>
+        <!--<th>空余房间数量</th>
+        <th>预订数量</th>
+        <th>已入住数量</th>-->
+        <th>备注</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr th:each="roomtype: ${iPage.records}">
+        <td th:text="${roomtype.tid}">1</td>
+        <td th:text="${roomtype.tname}">张三</td>
+        <td>
+            <img th:src="@{${roomtype.tphoto}}" th:width="100px"/>
+        </td>
+        <td th:text="${roomtype.tprice}">1</td>
+        <td th:text="${roomtype.tlivenum}">1</td>
+        <td th:text="${roomtype.tbednum}">1</td>
+        <td th:text="${roomtype.troomnum}">1</td>
+        <!--<td th:text="${roomtype.troomnum}-${roomtype.tbooknum}-${roomtype.tlivednum}">1</td>
+        <td th:text="${roomtype.tbooknum}">1</td>
+        <td th:text="${roomtype.tlivednum}">1</td>-->
+        <td th:text="${roomtype.tremark}">1</td>
+        <td width="10px"><a th:href="@{|/roomtype/${roomtype.tid}|}" class="btn btn-success">编辑</a></td>
+        <td>
+            <form th:action="@{|/roomtype/${roomtype.tid}|}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="删除" class="btn btn-danger"/>
+            </form>
+        </td>
+    </tr>
+</table>
+<a th:href="@{|/roomtype/?page=1&size=2|}" >首页</a>
+<span th:if="${iPage.current>1}">
+    <a th:href="@{|/roomtype/?page=${iPage.current-1}&size=2|}" >上一页</a>
+</span>
+<span th:if="${iPage.current<pages}">
+    <a th:href="@{|/roomtype/?page=${iPage.current+1}&size=2|}" >下一页</a>
+</span>
+<a th:href="@{|/roomtype/?page=${pages}&size=2|}" >末页</a>
+</body>
+</html>

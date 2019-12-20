@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>收入情況</title>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script th:src="@{https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <style>
+        input, button {
+            border: none;
+            outline: none;
+        }
+
+        .bar7 {
+            background: #7BA7AB;
+            height: 40px;
+        }
+        .bar7 form {
+            height: 20px;
+        }
+        .bar7 input {
+            width: 250px;
+            border-radius: 42px;
+            border: 2px solid #324B4E;
+            background: #F9F0DA;
+            transition: .3s linear;
+            position: absolute;
+            top: 8px;
+        }
+
+        .bar7 button {
+            background: none;
+            top: 10px;
+            left: 350px;
+            position: absolute;
+        }
+        .bar7 button:before{
+            content: "\f002";
+            font-family: FontAwesome;
+            color: #324b4e;
+        }
+
+    </style>
+</head>
+<body>
+<div class="search bar7">
+    <form class="form-inline" name="f1" action="countmonth" method="get" onsubmit="return checkForm()">
+        <div class="form-body" data-example-id="simple-form-inline">
+            <div class="form-group" style="position: absolute;top: 3px">
+                <label >选择查看日期:</label>
+                <select name="year" id="year" class="form-control" >
+                    <option value=""  disabled selected hidden>请选择年份</option>
+                    </span>
+                </select>&emsp;
+                <select name="month" id="month" class="form-control" >
+                    <option value=""  disabled selected hidden>请选择月份</option>
+                </select>
+            </div>
+            <!--添加商品-->
+            <!-- Button trigger modal -->
+            <button type="submit">
+
+            </button>
+        </div>
+    </form>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>订单编号</th>
+        <th>姓名</th>
+        <th>身份证号</th>
+        <th>手机号</th>
+        <th>离店时间</th>
+        <th>价格</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    <tr th:each="income: ${list}" id="table1">
+        <td th:text="${income.bianhao}">1</td>
+        <td th:text="${income.realname}">1</td>
+        <td th:text="${income.idcard}">1</td>
+        <td th:text="${income.phone}">1</td>
+        <td th:text="${#dates.format(income.leavedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${income.tprice}">1</td>
+        <!--<select id="edit-status" name="status" class="easyui-combobox" panelHeight="auto" style="width:268px" data-options="required:true, missingMessage:'请选择状态'">
+                <option value="0">预定中</option>
+                <option value="1">已入住</option>
+            </select>
+-->
+        <td width="10px"><a th:href="@{|/income/${income.Iid}|}" class="btn btn-success">编辑</a></td>
+        <td width="10px">
+            <form th:action="@{|/income/${income.Iid}|}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="删除" class="btn btn-danger"/>
+            </form>
+        </td>
+    </tr>
+</table>
+月销售单数：<span id="showCount" th:text="${countincome}"></span>&emsp;
+月销售金额：<span id="showMoney" th:text="${summoney}"></span>&emsp;
+年销售单数：<span id="showCount" th:text="${countincome1}"></span>&emsp;
+年销售金额：<span id="showMoney" th:text="${summoney1}"></span>
+<br/>
+<br/>
+<!--总价格： <span id="showAllPrice">0</span></br>-->
+<script type="text/javascript">
+    $(function(){
+        //执行代码
+        //判断是否在前面加0
+
+        function getNow(s) {
+            return s<10?'0'+s : s;
+        }
+
+        var myDate = new Date();
+
+        var year=myDate.getFullYear();        //获取当前年
+        var month=myDate.getMonth()+1;   //获取当前月
+
+
+
+        for(var i=2011;i<=year;i++){ //index是索引值 p是元素中的对象
+            //将年份数组的元素填充到下拉框中
+            $("#year").append("<option >"+i+"</option>");
+
+        }
+
+        //填充月份
+        $("#year").change(function(){
+            //清空新增的option  :gt(0) 找到索引值大于0的元素
+            $("#month option:gt(0)").remove();
+            if($(this).val()==year){
+                for(var i=1;i<=month;i++){//index是索引值 c是元素中的对象
+                    var mon=getNow(i);
+                    $("#month").append("<option >"+mon+"</option>");
+
+                }
+            }
+            else {
+                for (var i = 1; i <= 12; i++) {//index是索引值 c是元素中的对象
+                    var mon=getNow(i);
+                    $("#month").append("<option >" + mon + "</option>");
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

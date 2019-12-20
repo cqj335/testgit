@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房间类型</title>
+    <script th:src="@{http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script th:src="@{https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <style>
+    input, button {
+        border: none;
+        outline: none;
+    }
+
+    .bar7 {
+        background: #7BA7AB;
+        height: 40px;
+    }
+    .bar7 form {
+        height: 20px;
+    }
+    .bar7 input {
+        width: 250px;
+        border-radius: 42px;
+        border: 2px solid #324B4E;
+        background: #F9F0DA;
+        transition: .3s linear;
+        position: absolute;
+        top: 8px;
+    }
+
+    .bar7 button {
+        background: none;
+        top: 10px;
+        left: 220px;
+        position: absolute;
+    }
+    .bar7 button:before{
+        content: "\f002";
+        font-family: FontAwesome;
+        color: #324b4e;
+    }
+
+</style>
+</head>
+<body>
+<div class="search bar7">
+        <input type="text" class="rnum" placeholder="&nbsp;&nbsp;请输入房间号...">
+        <button  data-toggle="modal" data-target="#myModal"></button>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    房间查询
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="emps_table">
+                    <thead>
+                    <tr>
+                        <th>房间号</th>
+                        <th>房间类型</th>
+                        <th>真实姓名</th>
+                        <th>住店时间</th>
+                        <th>离店时间</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table class="table table-striped">
+
+    <tr>
+        <th>房间号</th>
+        <th>房间类型</th>
+        <th>真实姓名</th>
+        <th>住店时间</th>
+        <th>离店时间</th>
+    </tr>
+    <tr th:each="room: ${iPage.records}">
+        <td th:text="${room.roomnum}">张三</td>
+        <td th:text="${room.tname}">1</td>
+        <td th:text="${room.realname}">1</td>
+        <td th:text="${#dates.format(room.arrivedate,'yyyy-MM-dd')}">1</td>
+        <td th:text="${#dates.format(room.leavedate,'yyyy-MM-dd')}">1</td>
+    </tr>
+</table>
+<a th:href="@{|/room?page=1&size=2|}" >首页</a>
+<span th:if="${iPage.current>1}">
+    <a th:href="@{|/room?page=${iPage.current-1}&size=2|}">上一页</a>
+</span>
+<!--<span th:if="${iPage.current>1&&iPage.current<3}">
+    <a th:href="@{|/book?page=${iPage.current-1}&size=2|}">2</a>
+</span>-->
+<span th:if="${iPage.current<pages}">
+    <a th:href="@{|/room?page=${iPage.current+1}&size=2|}">下一页</a>
+</span>
+<a th:href="@{|/room?page=${pages}&size=2|}" >末页</a>
+</body>
+<script type="text/javascript">
+    $(function () {
+    $("#myModal").click(function () {
+        $("#emps_table tbody").empty();
+        var roomnum=$(".rnum").val();
+        $.get("myModal",{roomnum:roomnum},function (result) {
+            build_myOrder_table(result);
+        },"json");
+    });
+    function build_myOrder_table(result) {
+        $.each(result, function (index, item) {
+            // var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
+            var Roomnum = $("<td></td>").append(item.roomnum);
+            var Tname = $("<td></td>").append(item.tname);
+            var Realname = $("<td></td>").append(item.realname);
+            var myArrivedate = $("<td></td>").append(format(item.arrivedate));
+            var myLeavedate = $("<td></td>").append(format(item.leavedate));
+            $("<tr></tr>")
+                .append(Roomnum)
+                .append(Tname)
+                .append(Realname)
+                .append(myArrivedate)
+                .append(myLeavedate)
+                .appendTo("#emps_table tbody");
+        });
+    }
+        function add0(m){return m<10?'0'+m:m }
+        function format(timestamp)
+        {
+            //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+            var time = new Date(timestamp);
+            var year = time.getFullYear();
+            var month = time.getMonth()+1;
+            var date = time.getDate();
+            // var hours = time.getHours();
+            // var minutes = time.getMinutes();
+            // var seconds = time.getSeconds();
+            //+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds)
+            return year+'-'+add0(month)+'-'+add0(date);
+        }
+        //鼠标经过图片放大
+
+    });
+</script>
+</body>
+</html>

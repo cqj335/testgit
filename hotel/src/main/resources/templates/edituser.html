@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑用户</title>
+</head>
+<body>
+<form action="../muser" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="uid" th:value="${muser.uid}">
+    用户名：<input type="text" name="uname" th:value="${muser.uname}"/><br/>
+    密码：<input type="text" name="upassword" th:value="${muser.upassword}"/><br/>
+    手机号：<input type="text" name="phone" th:value="${muser.phone}"/><br/>
+    状态：<input type="text" name="ustate" th:value="${muser.ustate}"/><br/>
+    <input type="submit" class="submit"/>
+</form>
+</body>
+</html>

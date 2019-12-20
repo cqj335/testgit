@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>温馨提示，已到预订日期的订单无法退款，酒店联系电话：333333333</h3>
+<form th:action="@{/eorder}" method="get">
+    <input type="hidden" name="bid" id="bid" th:value="${book.bid}"/>
+    编号：<input type="text" name="bianhao" th:value="${book.bianhao}" readonly><br/>
+    退款金额：<input type="text" name="jiage" th:value="${book.jiage}" readonly/><br/>
+    <br/>
+    <input type="submit" class="btn btn-danger" id="bookbtn" value="确认退款"/>
+</form>
+</body>
+<script type="text/javascript">
+    $(function () {
+    $(document).on('click', "#bookbtn", function () {
+        var bid=$("#bid").val();
+        $.get("orderRoom",{bid:bid},function (data) {
+            if(data==false){
+                alert("预订日期已到，无法退款")
+            }else{
+                alert("退款成功")
+            }
+
+        },"json");
+
+    })
+    })
+    </script>
+</html>

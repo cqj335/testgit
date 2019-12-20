@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="../bood" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="bid" th:value="${bood.bid}">
+    <input type="date" name="creadate" th:value="${bood.creadate}" style="display: none"/>
+    用户名：<input type="text" name="uname" th:value="${bood.uname}"><br/>
+    房型：<input type="text" name="tname" th:value="${bood.tname}"><br/>
+    真实姓名：<input type="text" name="realname" th:value="${bood.realname}"/><br/>
+    身份证号：<input type="text" name="idcard" th:value="${bood.idcard}"/><br/>
+    手机号：<input type="text" name="phone" th:value="${bood.phone}"/><br/>
+    住店时间：<input type="date" name="arrivedate" th:value="${#dates.format(bood.arrivedate,'yyyy-MM-dd')}"/><br/>
+    离店时间：<input type="date" name="leavedate" th:value="${#dates.format(bood.leavedate,'yyyy-MM-dd')}"/><br/>
+    价格：<input type="text" name="tprice" th:value="${bood.tprice}"/><br/>
+    状态：<select id="edit-status" name="bremark" required="required" th:value="${bood.bremark}">
+    <option value="0">预定中</option>
+    <option value="1">已入住</option>
+</select><br/>
+    <input type="submit" class="submit"/>
+</form>
+</body>
+</html>

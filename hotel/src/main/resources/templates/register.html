@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>register</title>
+    <script th:src="@{/js/jquery-3.2.1.js}"></script>
+    <meta name="description" content="particles.js is a lightweight JavaScript library for creating particles.">
+    <meta name="author" content="Vincent Garreau">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}">
+
+
+    <style type="text/css">
+        .success{
+            color: green;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .error{
+            color: red;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+
+
+</head>
+<div id="particles-js">
+    <div class="login" style="display: block;">
+        <div class="login-top" style="position: relative;margin-top: 30px">
+            注册
+        </div>
+        <form th:action="adduser" method="post" onsubmit="return checkForm()" style="position: relative;margin-top: -20px">
+            <div class="login-center clearfix">
+                <div class="login-center-input">
+                    <label for="username" id="name">用户名：</label>
+
+        <input type="text" name="uname" id="username" value="" onblur="checkName()" placeholder="请输入用户名"/>
+        <label id="nameTip1"></label>
+        <br><label id="nameTip"></label>
+                </div>
+    </div>
+
+     <div class="login-center clearfix">
+                <div class="login-center-input">
+                    <label for="pwd">&emsp;密码：</label>
+        <input type="password" name="upassword" id="pwd" value="" onblur="checkPwd()" placeholder="请输入不少于6位的密码"/>
+        <label id="pwdTip1"></label>
+        <br><label id="pwdTip"></label>
+                </div>
+     </div>
+
+     <div class="login-center clearfix">
+         <div class="login-center-input">
+            <label for="rpwd">确认密码：</label>
+            <input type="password" name="rpwd" id="rpwd" value="" onblur="checkrPwd()" placeholder="请输入相同的密码"/>
+             <label id="rpwdTip1" ></label>
+            <br><label id="rpwdTip" ></label>
+         </div>
+     </div>
+     <div class="login-center clearfix">
+         <div class="login-center-input">
+        <label for="phone">&emsp;手机号：</label>
+        <input type="text" name="phone" id="phone" value="" onblur="checkPhone()" placeholder="请输入手机号"/>
+        <label id="phoneTip1"></label>
+        <br><label id="phoneTip"></label>
+         </div>
+     </div>
+     <div class="login-center clearfix">
+         <div class="login-center-input">
+        <label for="yzm">&emsp;验证码：</label>
+        <input type="text" name="yzm" id="yzm" value="" onblur="checkYzm()" placeholder="请输入验证码"/>
+        <label style="color:red;">*</label>
+         </div>
+     </div>
+     <div style="text-align: center" >
+        <input type="button" name="" id="yzmTip" class="login-button"  style="width: 100px" value="获取验证码" onclick="getRandom()"/>
+
+     </div>
+    <input name="ustate" type="hidden" value="1">
+     <div style="text-align: center;">
+    <input type="submit" class="login-button" name="" id="" value="注册"/>
+     </div>
+</form>
+</div>
+    <div class="sk-rotating-plane"></div>
+    <canvas class="particles-js-canvas-el" width="1147" height="952" style="width: 100%; height: 100%;"></canvas></div>
+    <script th:src="@{/js/particles.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+    <script th:src="@{/js/jquery-1.8.0.min.js}"></script>
+<script type="text/javascript">
+    function checkName () {
+        var username=document.getElementById("username").value;
+        if (username.trim().length==0) {
+            document.getElementById("nameTip1").innerText="";
+            document.getElementById("nameTip").innerText="用户名不能为空";
+            document.getElementById("nameTip").className="error";
+            return false;
+        }else{
+            document.getElementById("nameTip").innerText="";
+            // document.getElementById("nameTip1").innerText="✔";
+            document.getElementById("nameTip1").className="success";
+            return true;
+        }
+    }
+
+    function checkPhone () {
+        var phone=document.getElementById("phone").value;
+        if (phone.trim().length==0) {
+            document.getElementById("phoneTip1").innerText="";
+            document.getElementById("phoneTip").innerText="手机号不能为空"
+            document.getElementById("phoneTip").className="error";
+            return false;
+        }
+        var pat =/^1[3578]\d{9}$/;
+        if (pat.test(phone)) {
+            document.getElementById("phoneTip").innerText="";
+            document.getElementById("phoneTip1").innerText="✔";
+            document.getElementById("phoneTip1").className="success";
+            return true;
+        }
+        else{
+            document.getElementById("phoneTip1").innerText="";
+            document.getElementById("phoneTip").innerText="手机格式不正确"
+            document.getElementById("phoneTip").className="error";
+            return false;
+        }
+    }
+
+    function checkPwd () {
+    var pwd=document.getElementById("pwd").value;
+        if (pwd.trim().length==0) {
+            document.getElementById("pwdTip1").innerText=" ";
+            document.getElementById("pwdTip").innerText="密码不能为空";
+            document.getElementById("pwdTip").className="error";
+            return false;
+        }
+        else if (document.getElementById("pwd").value.trim().length<6) {
+            document.getElementById("pwdTip1").innerText=" ";
+            document.getElementById("pwdTip").innerText="密码长度不对";
+            document.getElementById("pwdTip").className="error";
+            return false;
+        }
+        else{
+            document.getElementById("pwdTip").innerText="";
+            document.getElementById("pwdTip1").innerText="✔";
+            document.getElementById("pwdTip1").className="success";
+            return true;
+        }
+
+    }
+    function checkrPwd () {
+        var rpwd=document.getElementById("rpwd").value
+        var pwd=document.getElementById("pwd").value
+        if (rpwd!=pwd) {
+            document.getElementById("rpwdTip1").innerText="";
+            document.getElementById("rpwdTip").innerText="两次输入的密码不一致！";
+            document.getElementById("rpwdTip").className="error";
+            return false;
+
+        }else{
+        document.getElementById("rpwdTip").innerText="";
+        document.getElementById("rpwdTip1").innerText="✔";
+        document.getElementById("rpwdTip1").className="success";
+        return true;}
+    }
+    function getRandom () {
+        r=parseInt(Math.random()*10000);
+        document.getElementById("yzmTip").value =r;
+
+    }
+
+    function checkYzm () {
+        if (r!=document.getElementById("yzm").value) {
+            alert("验证码输入错误！");
+            return false;
+
+        }
+        return true;
+    }
+
+    function checkForm () {
+        if (checkName()&&checkPhone()&&checkPwd()&&checkrPwd()&&checkYzm()&&document.getElementById("cb").checked==true) {
+            return true;
+            alert("注册成功")
+        }
+        return false;
+    }
+    $(function () {
+        //给uname绑定blur事件
+        $("#username").blur(function () {
+            var username=$(this).val();
+            $.get("findUname",{username:username},function (data) {
+                var nameTip=$("#nameTip");
+                var nameTip1=$("#nameTip1");
+                if (username.trim().length==0){
+                    nameTip.css("color","red")
+                    nameTip.innerText="用户名不能为空";
+                }else{
+                if(data.userExit){
+                    nameTip.css("color","red")
+                    nameTip.html(data.msg);
+                }else{
+
+                    nameTip1.css("color","green")
+                    nameTip1.html(data.msg);
+                }}
+            },"json");
+        });
+        
+        });
+    addClass(document.querySelector(".login"), "active")
+    addClass(document.querySelector(".sk-rotating-plane"), "active")
+    document.querySelector(".login").style.display = "none"
+
+</script>
+
+
+</body>
+</html>
